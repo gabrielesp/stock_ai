@@ -1,0 +1,6 @@
+# Vim files
+*.swp
+*.swo
+
+# Python undesired stuff
+*.pyc
