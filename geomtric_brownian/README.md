@@ -1,1 +1,0 @@
-Geomtric brownian motion
