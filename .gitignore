@@ -4,3 +4,9 @@
 
 # Python undesired stuff
 *.pyc
+
+# Virtual env undesired stuff
+bin/*
+include/*
+lib/*
+pip-selfcheck.json
