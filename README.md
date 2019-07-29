@@ -2,6 +2,16 @@
 
 Python library for stock market predictions using stochastic model resolution together with IA and ML.
 
+### To load/unload StockAI to environment (PYTHONPATH)
+To load
+```
+. pyenv.sh load
+```
+To unload
+```
+. pyenv.sh unload
+```
+
 ### Create virtual env
 Virtual env can be created throught create\_virtualenv.sh script.
 ```
