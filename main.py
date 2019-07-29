@@ -43,6 +43,7 @@ if __name__ == "__main__":
     stop_date = pd.to_datetime('2019-07-26')
     msft = pdr.data.get_data_yahoo('MSFT', start_date, stop_date)
 
+
     # Calculate daily change of the stock price
     msft['Daily Change'] = pd.Series(msft['Close'] - msft['Open'])
 
