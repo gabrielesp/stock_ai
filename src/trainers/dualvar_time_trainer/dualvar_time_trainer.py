@@ -1,3 +1,4 @@
+from math import isnan
 from trainers.trainer import TrainerException
 from trainers.trainer import Trainer
 
@@ -76,18 +77,20 @@ class DualvarTimeTrainer(Trainer):
                     # Get the error measure
                     error = self.errorMeasure(x0c, x1c)
 
-                    # Minimum error as genetic criteria
-                    if minError is None or error < minError:
-                        minError = error
-                        x0 = x0c
-                        x1 = x1c
+                    # Ignore nan error measures
+                    if not isnan(error):
+                        # Minimum error as genetic criteria
+                        if minError is None or error < minError:
+                            minError = error
+                            x0 = x0c
+                            x1 = x1c
 
-                    # Some error statistics (redesign to use
-                    # DualvarTrainerResult if further statistics are desired)
-                    if maxError is None or error > maxError:
-                        maxError = error
-                    avgError += error
-                    nError += 1.0
+                        # Some error statistics (redesign to use
+                        # DualvarTrainerResult if further statistics are desired)
+                        if maxError is None or error > maxError:
+                            maxError = error
+                        avgError += error
+                        nError += 1.0
 
                     # Remember this pair has already been considered
                     considered.add((x0c, x1c))

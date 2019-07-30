@@ -13,11 +13,12 @@ n = 10  # Number of samples
 def dualvarTimeFunction(t, x0, x1):
     model = GeometricBrownianMotion(mu=x0, sigma=x1)
     wienerProcess = model.computeWienerProcess(n)
-    return model._calc(
-        data0=y0,
+    result = model._calc(
+        data0=y0[1],
         t=t,
         wienerProcess=wienerProcess
     )
+    return result
 
 
 def obtainDualvarTimeY():
@@ -28,8 +29,6 @@ def obtainDualvarTimeY():
 # ----------------- #
 if __name__ == '__main__':
     # Obtain data
-
-    # Obtain dualvar time y
     dualvarTimeY = obtainDualvarTimeY()
     y0 = dualvarTimeY[0]
 
@@ -42,10 +41,29 @@ if __name__ == '__main__':
     # Train
     print('Training ... ')
     start = time.perf_counter()
-    dvtTrainer.train(
-        searchFactor=2,
-        searchSteps=4,
-        searchDeep=64
-    )
+    x0, x1, minError, maxError, avgError, deltaError = \
+        dvtTrainer.train(
+            searchFactor=2,
+            searchSteps=1,
+            searchDeep=8
+        )
     end = time.perf_counter()
     print('Trained in {s} seconds'.format(s=end-start))
+
+    # Summary
+    print(
+        '\n\n\t\t SUMMARY\n'
+        '\t---------------\n'
+        'Min error of {minerr} was found for [mu={x0}  ,  sigma={x1}]\n'
+        '\tMax found error was {maxerr}\n'
+        '\tAverage error was {avgerr}\n'
+        '\tDelta error was {derr}\n'
+        .format(
+            minerr=minError,
+            x0=x0,
+            x1=x1,
+            maxerr=maxError,
+            avgerr=avgError,
+            derr=deltaError
+        )
+    )
