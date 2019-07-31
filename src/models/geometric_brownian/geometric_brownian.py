@@ -33,7 +33,7 @@ class GeometricBrownianMotion(Model):
         # Check
         if not isinstance(data0, float):
             raise GeometricBrownianMotionException(
-                'Can not apply GeometricBrownianMotion to None data'
+                'Can not apply GeometricBrownianMotion to non float data'
             )
 
         if n < 1:

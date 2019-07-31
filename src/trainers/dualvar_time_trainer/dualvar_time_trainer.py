@@ -1,4 +1,5 @@
 from math import isnan
+from decimal import Decimal
 from trainers.trainer import TrainerException
 from trainers.trainer import Trainer
 
@@ -60,7 +61,7 @@ class DualvarTimeTrainer(Trainer):
         # Genetic finding process : Deep search
         minError = None
         maxError = None
-        avgError = 0
+        avgError = Decimal(0)
         nError = 0
         x0 = None
         x1 = None
@@ -75,10 +76,10 @@ class DualvarTimeTrainer(Trainer):
                         continue
 
                     # Get the error measure
-                    error = self.errorMeasure(x0c, x1c)
+                    error = self.errorMeasure(x0=x0c, x1=x1c)
 
                     # Ignore nan error measures
-                    if not isnan(error):
+                    if not isnan(error) and float("inf") != error:
                         # Minimum error as genetic criteria
                         if minError is None or error < minError:
                             minError = error
@@ -86,11 +87,12 @@ class DualvarTimeTrainer(Trainer):
                             x1 = x1c
 
                         # Some error statistics (redesign to use
-                        # DualvarTrainerResult if further statistics are desired)
+                        # DualvarTrainerResult if further statistics
+                        # are desired)
                         if maxError is None or error > maxError:
                             maxError = error
-                        avgError += error
-                        nError += 1.0
+                        avgError = avgError + Decimal(error)
+                        nError += 1
 
                     # Remember this pair has already been considered
                     considered.add((x0c, x1c))
@@ -112,7 +114,8 @@ class DualvarTimeTrainer(Trainer):
                 break
 
         # Return min error pair and error measures
-        return x0, x1, minError, maxError, avgError/nError, maxError-minError
+        return x0, x1, minError, maxError, float(avgError/Decimal(nError)), \
+            maxError-minError
 
     # ---  INNER FUNCTIONS  --- #
     # ------------------------- #
