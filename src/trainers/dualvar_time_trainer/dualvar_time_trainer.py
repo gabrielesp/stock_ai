@@ -15,23 +15,27 @@ class DualvarTimeTrainer(Trainer):
         # Checks
         if f is None:
             raise DualvarTimeTrainerException(
-                'Can not initialize DualvarTimeTrainer with None '
+                'Can not initialize {classname} with None '
                 'dualvar function'
+                .format(classname=self.__class__.__name__)
             )
         if y is None:
             raise DualvarTimeTrainerException(
-                'Can not initialize DualvarTimeTrainer with None y'
+                'Can not initialize {classname} with None y'
+                .format(classname=self.__class__.__name__)
             )
         if len(y) < 1:
             raise DualvarTimeTrainerException(
-                'Can not initialize DualvarTimeTrainer with y having '
+                'Can not initialize {classname} with y having '
                 'less than 1 element'
+                .format(classname=self.__class__.__name__)
             )
         if len(y[0]) < 2:
             raise DualvarTimeTrainerException(
-                'Can not initialize DualvarTimeTrainer with y elements '
+                'Can not initialize {classname} with y elements '
                 'not having at least:\n'
                 '\t[t, v] as first and second elements'
+                .format(classname=self.__class__.__name__)
             )
 
         # Super init
