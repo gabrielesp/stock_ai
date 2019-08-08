@@ -1,5 +1,7 @@
 from trainers.dualvar_time_trainer import DualvarTimeTrainer
-from models.geometric_brownian import GeometricBrownianMotion
+from trainers.functions.geometric_brownian_motion_trainer_function import \
+    GeometricBrownianMotionTrainerFunction
+from models.geometric_brownian_motion import GeometricBrownianMotion
 import time
 import sys
 import pandas as pd
@@ -52,7 +54,7 @@ if __name__ == '__main__':
 
     # Instantiate trainer
     dvtTrainer = DualvarTimeTrainer(
-        f=dualvarTimeFunction,
+        f=GeometricBrownianMotionTrainerFunction,
         y=dualvarTimeY
     )
 

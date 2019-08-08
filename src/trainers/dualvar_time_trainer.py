@@ -1,19 +1,20 @@
 from math import isnan
 from decimal import Decimal
-from trainers.trainer import TrainerException
-from trainers.trainer import Trainer
+from trainers.dualvar_trainer import DualvarTrainer, DualvarTrainerException
+from trainers.functions.dualvar_time_trainer_function import \
+    DualvarTimeTrainerFunction
 
 
-class DualvarTimeTrainerException(TrainerException):
+class DualvarTimeTrainerException(DualvarTrainerException):
     pass
 
 
-class DualvarTimeTrainer(Trainer):
+class DualvarTimeTrainer(DualvarTrainer):
     # ---  INIT  --- #
     # -------------- #
     def __init__(self, f=None,  y=None):
         # Checks
-        if f is None:
+        if f.__class__ is not DualvarTimeTrainerFunction.__class__:
             raise DualvarTimeTrainerException(
                 'Can not initialize {classname} with None '
                 'dualvar function'
@@ -37,9 +38,6 @@ class DualvarTimeTrainer(Trainer):
                 '\t[t, v] as first and second elements'
                 .format(classname=self.__class__.__name__)
             )
-
-        # Super init
-        super(DualvarTimeTrainer, self).__init__()
 
         # Assigns
         self.f = f
@@ -145,8 +143,13 @@ class DualvarTimeTrainer(Trainer):
 
         # Error measure
         error = 0.0
+        dualvarTimeTrainerFunction = self.f(
+            x0=float(x0),
+            x1=float(x1),
+            y=[v for [t, v] in self.y]
+        )
         for [t, v] in self.y:
-            prediction = self.f(t, x0, x1)
+            prediction = dualvarTimeTrainerFunction.calc(t=t)
             error += (prediction - v)**2
         return error
 

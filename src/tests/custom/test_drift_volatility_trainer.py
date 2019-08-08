@@ -1,5 +1,5 @@
 from trainers.drift_volatility_trainer import DriftVolatilityTrainer
-from models.geometric_brownian import GeometricBrownianMotion
+from models.geometric_brownian_motion import GeometricBrownianMotion
 import time
 import sys
 import pandas as pd

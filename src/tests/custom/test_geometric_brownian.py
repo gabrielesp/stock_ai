@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from models.geometric_brownian import GeometricBrownianMotion
+from models.geometric_brownian_motion import GeometricBrownianMotion
 
 
 def generateTestData(n=10):
